@@ -120,7 +120,7 @@ def load_img(case):
                 label[i,int(IOSbinary)] = 1
             i=i+1
         except:
-            print(name)
+            print(name,number)
     return img_set,label
 
 
