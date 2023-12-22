@@ -72,8 +72,8 @@ def A_resize(X_stack):
 
 def load_img(case):
     
-    data = pd.read_csv('E:/eye/58Case.csv')
-    num_data = len(os.listdir('E:/eye/FRACTURE.FAKHREDINPart1_processed'))
+    data = pd.read_csv('GrounTruth1.csv')
+    num_data = len(os.listdir('CHECKED DATA'))
     const_pixel_dims = (num_data, 128, 128, 96)
     i = 0
     img_set = np.zeros(const_pixel_dims, dtype=np.float32)
@@ -83,9 +83,10 @@ def load_img(case):
     else:
         label = np.zeros((num_data,2), dtype=np.float32)
                     
-    for dir in os.listdir('E:/eye/FRACTURE.FAKHREDINPart1_processed'):
+    for dir in os.listdir('CHECKED DATA'):
         try:
-            path = os.path.join('E:/eye/FRACTURE.FAKHREDINPart1_processed',dir)
+            number = int(dir.split(' ')[0])
+            path = os.path.join('CHECKED DATA',dir)
             name = os.listdir(path)[0]
             sub_dir =os.path.join(path,name)
             A_dir =  os.path.join(sub_dir,'A')
@@ -110,11 +111,7 @@ def load_img(case):
             new_A_stack = A_resize(A_stack)
             image_stack = np.concatenate((new_C_stack,new_A_stack,new_S_stack),2)
             img_set [i,:,:,:] = image_stack
-            selected = name
-            data['lower_name'] = data.name.str.replace(' ', '').apply(str. lower)
-            data ['compare'] = data.lower_name + data.lower_name
-            selected = selected.replace(' ', '').lower()
-            patient = data[data['compare'].str.contains(selected)]
+            patient = data[data['Code'] == number]
             patient_numpy = patient[['ONSbinary' , 'ONS','IOS','IOSbinary','IOSONS']].to_numpy()
             ONSbinary , ONS,IOS,IOSbinary , IOSONS = patient_numpy[0]
             if case == "fourClass":
