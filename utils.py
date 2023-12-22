@@ -73,7 +73,7 @@ def A_resize(X_stack):
 def load_img(case):
     
     data = pd.read_csv('GrounTruth1.csv')
-    num_data = len(os.listdir('CHECKED DATA'))
+    num_data = len(os.listdir('Data'))
     const_pixel_dims = (num_data, 128, 128, 96)
     i = 0
     img_set = np.zeros(const_pixel_dims, dtype=np.float32)
@@ -83,10 +83,10 @@ def load_img(case):
     else:
         label = np.zeros((num_data,2), dtype=np.float32)
                     
-    for dir in os.listdir('CHECKED DATA'):
+    for dir in os.listdir('Data'):
         try:
             number = int(dir.split(' ')[0])
-            path = os.path.join('CHECKED DATA',dir)
+            path = os.path.join('Data',dir)
             name = os.listdir(path)[0]
             sub_dir =os.path.join(path,name)
             A_dir =  os.path.join(sub_dir,'A')
